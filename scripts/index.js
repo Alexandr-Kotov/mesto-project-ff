@@ -3,16 +3,16 @@ const cardTemplate = document.querySelector('#card-template').content;
 
 function createCard (element) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-  cardElement.querySelector('.card__image').src = element.link;
-  cardElement.querySelector('.card__image').alt = element.name;
+  const cardImage = cardElement.querySelector('.card__image')
+  cardImage.src = element.link; 
+  cardImage.alt = element.name;
   cardElement.querySelector('.card__title').textContent = element.name;
-  cardElement.querySelector('.card__delete-button').addEventListener('click', deletCard);
+  cardElement.querySelector('.card__delete-button').addEventListener('click', () => deleteCard(cardElement));
   return cardElement
 }
 
-function deletCard (event) {
-  const deletElement = event.target.closest('.card')
-  deletElement.remove();
+function deleteCard(cardElement) {  
+  cardElement.remove(); 
 }
 
 initialCards.forEach(function (element) {
