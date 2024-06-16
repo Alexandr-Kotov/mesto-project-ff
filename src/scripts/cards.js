@@ -1,3 +1,5 @@
+import { openModal } from "./modal";
+
 const cardTemplate = document.querySelector('#card-template').content;
 const initialCards = [
     {
@@ -26,18 +28,30 @@ const initialCards = [
     }
 ];
 
-function createCard (element) {
+function createCard ({name, link}, likeCard) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image')
-  cardImage.src = element.link; 
-  cardImage.alt = element.name;
-  cardElement.querySelector('.card__title').textContent = element.name;
+  cardImage.src = link; 
+  cardImage.alt = name;
+  cardElement.querySelector('.card__title').textContent = name;
   cardElement.querySelector('.card__delete-button').addEventListener('click', () => deleteCard(cardElement));
+  cardElement.querySelector('.card__like-button').addEventListener('click', likeCard)
+  cardElement.querySelector('.card__image').addEventListener('click', () => popupCard({name, link}))
   return cardElement
 }
 
-function deleteCard(cardElement) {  
+function deleteCard(cardElement) {
   cardElement.remove(); 
 }
 
-export { initialCards, createCard }
+function likeCard (evt) {
+  evt.target.classList.toggle('card__like-button_is-active');
+}
+
+function popupCard ({name, link}) {
+  openModal('.popup_type_image')
+  document.querySelector('.popup__image').src = link;
+  document.querySelector('.popup__caption').textContent = name;
+}
+
+export { initialCards, createCard, likeCard }
