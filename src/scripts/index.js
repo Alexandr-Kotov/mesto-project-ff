@@ -1,9 +1,9 @@
 import '../pages/index.css';
 import { initialCards } from './cards.js';
-import { createCard, likeCard, openImagePopup } from './card.js';
-import { openPopup, closePopup, setClosePopupEventListeners, handleFormSubmit, newCardFormSubmit } from './modal.js';
+import { createCard, likeCard } from './card.js';
+import { openPopup, closePopup, setClosePopupEventListeners } from './modal.js';
 const cardsContainer = document.querySelector('.places__list');
-const editPopup = document.querySelector(('.popup_type_edit'));
+const editPopup = document.querySelector('.popup_type_edit');
 const newCardPopup = document.querySelector('.popup_type_new-card');
 const imagePopup = document.querySelector('.popup_type_image');
 const editProfileForm = document.querySelector('[name="edit-profile"]');
@@ -12,6 +12,8 @@ const nameInput = document.querySelector('.popup__input_type_name');
 const jobInput = document.querySelector('.popup__input_type_description');
 const profileTitle = document.querySelector('.profile__title');
 const profileDescription = document.querySelector('.profile__description');
+const nameInputCard = document.querySelector('.popup__input_type_card-name');
+const urlInputCard = document.querySelector('.popup__input_type_url');
 
 document.querySelector('.profile__add-button').addEventListener('click', ()=> {
   openPopup(newCardPopup);
@@ -30,16 +32,45 @@ document.querySelectorAll('.popup__close').forEach(function (item){
     closePopup(popup);
   });
 })
+
+function openImagePopup ({name, link}) {
+  openPopup(imagePopup);
+  const image = document.querySelector('.popup__image');
+  image.src = link;
+  image.alt = name;
+  document.querySelector('.popup__caption').textContent = name;
+}
+
 setClosePopupEventListeners(newCardPopup);
 setClosePopupEventListeners(editPopup);
 
+function handleFormSubmit(evt) {
+  evt.preventDefault();
+  profileTitle.textContent = nameInput.value;
+  profileDescription.textContent = jobInput.value;
+  closePopup(editPopup);
+}
+
+function newCardFormSubmit(evt) {
+  evt.preventDefault();
+  const newCard = createCard({
+    name: nameInputCard.value, link: urlInputCard.value},
+    likeCard,
+    (element) => {
+      openImagePopup({name: element.name, link: element.link});
+      setClosePopupEventListeners(imagePopup);
+    }
+  )
+  cardsContainer.prepend(newCard);
+  newPlaceForm.reset();
+  closePopup(newCardPopup);
+}
 
 editProfileForm.addEventListener('submit', handleFormSubmit);
 newPlaceForm.addEventListener('submit', newCardFormSubmit);
 
 initialCards.forEach(function (element) {
   cardsContainer.append(createCard(element, likeCard, () => {
-    openPopup(imagePopup)
-    setClosePopupEventListeners(imagePopup)
-    openImagePopup({name: element.name, link: element.link})}))
+    setClosePopupEventListeners(imagePopup);
+    openImagePopup({name: element.name, link: element.link})}));
 })
