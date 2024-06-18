@@ -38,10 +38,11 @@ function openImagePopup ({name, link}) {
   const image = document.querySelector('.popup__image');
   image.src = link;
   image.alt = name;
-  document.querySelector('.popup__caption').textContent = name;
+  imagePopup.querySelector('.popup__caption').textContent = name;
 }
 
 setClosePopupEventListeners(newCardPopup);
+setClosePopupEventListeners(editPopup);
 setClosePopupEventListeners(editPopup);
 
 function handleFormSubmit(evt) {
@@ -56,10 +57,7 @@ function newCardFormSubmit(evt) {
   const newCard = createCard({
     name: nameInputCard.value, link: urlInputCard.value},
     likeCard,
-    (element) => {
-      openImagePopup({name: element.name, link: element.link});
-      setClosePopupEventListeners(imagePopup);
-    }
+    openImagePopup
   )
   cardsContainer.prepend(newCard);
   newPlaceForm.reset();
@@ -70,7 +68,5 @@ editProfileForm.addEventListener('submit', handleFormSubmit);
 newPlaceForm.addEventListener('submit', newCardFormSubmit);
 
 initialCards.forEach(function (element) {
-  cardsContainer.append(createCard(element, likeCard, () => {
-    setClosePopupEventListeners(imagePopup);
-    openImagePopup({name: element.name, link: element.link})}));
+  cardsContainer.append(createCard(element, likeCard, openImagePopup));
 })
