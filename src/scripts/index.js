@@ -43,7 +43,7 @@ function openImagePopup ({name, link}) {
 
 setClosePopupEventListeners(newCardPopup);
 setClosePopupEventListeners(editPopup);
-setClosePopupEventListeners(editPopup);
+setClosePopupEventListeners(imagePopup);
 
 function handleFormSubmit(evt) {
   evt.preventDefault();
