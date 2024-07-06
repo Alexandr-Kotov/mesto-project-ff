@@ -1,5 +1,3 @@
-
-
 export const enableValidation = ({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
   const showInputError = (formElement, inputElement, errorMessage) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
@@ -59,4 +57,19 @@ export const enableValidation = ({formSelector, inputSelector, submitButtonSelec
       buttonElement.classList.remove(inactiveButtonClass)
     }
   }
+}
+
+export const clearValidation = ({formSelector, inputSelector, submitButtonSelector, inactiveButtonClass, inputErrorClass, errorClass}) => {
+  const formList = Array.from(document.querySelectorAll(formSelector));
+      formList.forEach((formElement) => {
+        const inputList = Array.from(formElement.querySelectorAll(inputSelector));
+        inputList.forEach((inputElement) => {
+          const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+          const buttonElement = formElement.querySelector(submitButtonSelector);
+          inputElement.classList.remove(inputErrorClass);
+          errorElement.classList.remove(errorClass);
+          errorElement.textContent = '';
+          buttonElement.classList.add(inactiveButtonClass);
+        })
+  })
 }
