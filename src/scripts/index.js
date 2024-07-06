@@ -23,15 +23,15 @@ const profileImage = document.querySelector('.profile__image');
 
 function resetValidation () {
   document.querySelectorAll('.popup__input-error').forEach(function (error) {
-    error.textContent = ''
-  })
+    error.textContent = '';
+  });
   document.querySelectorAll('.popup__button').forEach(function (button) {
-    button.classList.add('popup__button_inactive')
-  })
+    button.classList.add('popup__button_inactive');
+  });
   document.querySelectorAll('.popup__input').forEach(function (input) {
-    input.classList.remove('popup__input-error_active')
-    input.classList.remove('popup__input_type_error')
-  })
+    input.classList.remove('popup__input-error_active');
+    input.classList.remove('popup__input_type_error');
+  });
 }
 
 document.querySelector('.profile__image-container').addEventListener('click', ()=> {
@@ -63,11 +63,11 @@ document.querySelectorAll('.popup__close').forEach(function (item){
 function renderLoading (isLoading) {
   document.querySelectorAll('.popup__button').forEach(function (item){
     if(isLoading){
-      item.textContent = 'Сохранение...'
+      item.textContent = 'Сохранение...';
     }else{
-      item.textContent = 'Сохранить'
+      item.textContent = 'Сохранить';
     }
-  })
+  });
 }
 
 function openImagePopup ({name, link}) {
@@ -81,11 +81,11 @@ function openImagePopup ({name, link}) {
 setClosePopupEventListeners(newCardPopup);
 setClosePopupEventListeners(editPopup);
 setClosePopupEventListeners(imagePopup);
-setClosePopupEventListeners(avatarPopup)
+setClosePopupEventListeners(avatarPopup);
 
 function avatarFormSumit(evt) {
   evt.preventDefault();
-  renderLoading(true)
+  renderLoading(true);
   patchAvatar({avatar: avatarInput.value})
   .then((data) => {
     profileImage.src = data.avatar;   
@@ -93,10 +93,10 @@ function avatarFormSumit(evt) {
     closePopup(avatarPopup);
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   })
   .finally(()=>{
-    renderLoading(false)
+    renderLoading(false);
   })
 }
 
@@ -110,10 +110,10 @@ function handleFormSubmit(evt) {
     closePopup(editPopup);
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   })
   .finally(()=>{
-    renderLoading(false)
+    renderLoading(false);
   })
 }
 
@@ -136,10 +136,10 @@ function newCardFormSubmit(evt) {
     closePopup(newCardPopup);
   })
   .catch((err) => {
-    console.log(err)
+    console.log(err);
   })
   .finally(()=>{
-    renderLoading(false)
+    renderLoading(false);
   })
 }
 
@@ -163,7 +163,7 @@ getUser()
   profileAvatar.src = data.avatar;
 })
 .catch((err) => {
-  console.log(err)
+  console.log(err);
 })
 
 Promise.all([getCards(), getUser()])
@@ -181,5 +181,5 @@ Promise.all([getCards(), getUser()])
   })
 })
 .catch((err) => {
-  console.log(err)
+  console.log(err);
 })
