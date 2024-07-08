@@ -18,8 +18,7 @@ function openImagePopup ({name, link}) {
 function  avatarFormSubmit (evt) {
   function makeRequestAvatr (){
     return patchAvatar({avatar: avatarInput.value}).then((user) => {
-      profileImage.src = user.avatar;   
-      avatarForm.reset();
+      profileImage.src = user.avatar;
       closePopup(avatarPopup);
     })
   }
@@ -52,7 +51,6 @@ function  newCardFormSubmit (evt) {
         deleteLike,
       )
       cardsContainer.prepend(newCard);  
-      newPlaceForm.reset();
       closePopup(newCardPopup);
     })
   }

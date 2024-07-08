@@ -1,6 +1,6 @@
 const cardTemplate = document.querySelector('#card-template').content;
 
-export function createCard (element, likeCard, imagePopup, userId, deleteCardId, putLike, deleteLike, user) {
+export function createCard (element, likeCard, handleImageClick, userId, deleteCardId, putLike, deleteLike, user) {
   const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
   const cardImage = cardElement.querySelector('.card__image');
   const cardDeleteButton = cardElement.querySelector('.card__delete-button');
@@ -20,16 +20,22 @@ export function createCard (element, likeCard, imagePopup, userId, deleteCardId,
         .then((data)=> {
           cardLikeCounter.textContent = data.likes.length;
           likeCard(evt)
-        });
+        })
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        })
       }else{
         deleteLike(element._id)
         .then((data)=> {
           cardLikeCounter.textContent = data.likes.length;
           likeCard(evt)
-        });
+        })
+        .catch((err) => {
+          console.error(`Ошибка: ${err}`);
+        })
       }
   });
-  cardImage.addEventListener('click', () => imagePopup({name: element.name, link: element.link}))
+  cardImage.addEventListener('click', () => handleImageClick({name: element.name, link: element.link}))
   
   element.likes.forEach(item => {
     if(item._id === user){
